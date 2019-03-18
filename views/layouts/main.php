@@ -36,20 +36,34 @@ AppAsset::register($this);
 
     <div class="collapse navbar-collapse" id="ftco-nav">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-        <li class="nav-item"><a href="places.html" class="nav-link">Places</a></li>
-        <li class="nav-item"><a href="hotel.html" class="nav-link">Hotels</a></li>
-        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-        <li class="nav-item"><a href="contact.html" class="nav-link">Login</a></li>
-        <li class="nav-item"><a href="index.php?r=admin/index" class="nav-link">Admin</a></li>
+        <?php
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
+                ['label' => 'Home', 'url' => ['/site/index']],
+                ['label' => 'About', 'url' => ['/site/about']],
+                ['label' => 'Contact', 'url' => ['/site/contact']],
+                Yii::$app->user->isGuest ? (
+                    ['label' => 'Login', 'url' => ['/site/login']]
+                ) : (
+                    '<li>'
+                    . Html::beginForm(['/site/logout'], 'post')
+                    . Html::submitButton(
+                        'Logout (' . Yii::$app->user->identity->username . ')',
+                        ['class' => 'btn btn-link logout']
+                    )
+                    . Html::endForm()
+                    . '</li>'
+                )
+            ],
+        ]);
+        ?>
       </ul>
     </div>
   </div>
 </nav>
 <!-- END nav -->
-//123
+
 
 <div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
   <div class="overlay"></div>
@@ -66,7 +80,7 @@ AppAsset::register($this);
   <div class="container">
     <div class="row justify-content-center mb-5 pb-3">
       <div class="col-md-7 heading-section text-center ftco-animate">
-        <h2><strong>Danh Sách Admin</strong> </h2>
+        <h2><strong></strong> </h2>
       </div>
       <?php echo $content ?>
     </div>
